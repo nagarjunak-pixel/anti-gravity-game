@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subterranean Colony Simulation & Agent Arena</title>
+    <meta name="description" content="Autonomous agent swarm simulation managing a subterranean colony. Designed with cyberpunk aesthetics.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=JetBrains+Mono:wght@400;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="colony-glow-elements">
+        <div class="ambient-glow glow-blue"></div>
+        <div class="ambient-glow glow-orange"></div>
+    </div>
+
+    <!-- HEADER -->
+    <header class="colony-header">
+        <div class="header-container">
+            <div class="brand">
+                <span class="material-icons-round brand-icon spin-slow">settings_input_component</span>
+                <h1>DEEPCORE CORE-1</h1>
+            </div>
+            <div class="sys-status">
+                <span class="pulse-dot green"></span>
+                <span class="sys-label">SWARM TELEMETRY ONLINE</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN INTERFACE -->
+    <main class="colony-layout">
+        <!-- LEFT SIDEBAR: STATUS & RESOURCES -->
+        <aside class="colony-panel panel-left">
+            <div class="panel-section">
+                <h2>COLONY CORE METRICS</h2>
+                <div class="metric-gauge">
+                    <div class="gauge-header">
+                        <span>Core Integrity</span>
+                        <span id="txt-integrity">100%</span>
+                    </div>
+                    <div class="gauge-bar"><div class="gauge-fill bg-red" id="fill-integrity" style="width: 100%;"></div></div>
+                </div>
+                <div class="metric-gauge">
+                    <div class="gauge-header">
+                        <span>Power Grid</span>
+                        <span id="txt-power">85%</span>
+                    </div>
+                    <div class="gauge-bar"><div class="gauge-fill bg-blue" id="fill-power" style="width: 85%;"></div></div>
+                </div>
+                <div class="metric-gauge">
+                    <div class="gauge-header">
+                        <span>Oxygen Support</span>
+                        <span id="txt-oxygen">98%</span>
+                    </div>
+                    <div class="gauge-bar"><div class="gauge-fill bg-green" id="fill-oxygen" style="width: 98%;"></div></div>
+                </div>
+            </div>
+
+            <div class="panel-section">
+                <h2>RESOURCE DEPOSITORIES</h2>
+                <div class="resource-card">
+                    <span class="material-icons-round res-icon color-gold">toll</span>
+                    <div class="res-details">
+                        <span class="res-label">Refined Gold</span>
+                        <span class="res-val" id="res-gold">250</span>
+                    </div>
+                </div>
+                <div class="resource-card">
+                    <span class="material-icons-round res-icon color-crystal">diamond</span>
+                    <div class="res-details">
+                        <span class="res-label">Aether Crystals</span>
+                        <span class="res-val" id="res-crystals">120</span>
+                    </div>
+                </div>
+                <div class="resource-card">
+                    <span class="material-icons-round res-icon color-science" style="color: #6ee7b7;">science</span>
+                    <div class="res-details">
+                        <span class="res-label">Science Points</span>
+                        <span class="res-val" id="res-science">0</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel-section">
+                <h2>CONSTRUCTION QUEUE</h2>
+                <p class="section-desc">Select a blueprint. Builders will automatically construct it once resources are met.</p>
+                <div class="blueprint-list">
+                    <button class="blueprint-btn active" data-build="turret">
+                        <span class="material-icons-round">security</span>
+                        <div class="bp-info">
+                            <span class="bp-name">Auto-Turret</span>
+                            <span class="bp-cost">Cost: 50 Gold, 20 Crystals</span>
+                        </div>
+                    </button>
+                    <button class="blueprint-btn" data-build="generator">
+                        <span class="material-icons-round">bolt</span>
+                        <div class="bp-info">
+                            <span class="bp-name">Power Node</span>
+                            <span class="bp-cost">Cost: 30 Gold, 40 Crystals</span>
+                        </div>
+                    </button>
+                </div>
+            </div>
+
+            <div class="panel-section">
+                <h2>AGENT DEPLOYMENT</h2>
+                <p class="section-desc">Purchase new citizens using Gold & Crystals.</p>
+                <div class="blueprint-list">
+                    <button class="agent-btn" id="btn-buy-miner">
+                        <span class="material-icons-round">hardware</span> Miner (20 G)
+                    </button>
+                    <button class="agent-btn" id="btn-buy-guard">
+                        <span class="material-icons-round">gavel</span> Guard (30 G, 10 C)
+                    </button>
+                    <button class="agent-btn" id="btn-buy-scout">
+                        <span class="material-icons-round">explore</span> Scout (10 G, 20 C)
+                    </button>
+                    <button class="agent-btn" id="btn-buy-researcher">
+                        <span class="material-icons-round">psychology</span> Researcher (50 G, 50 C)
+                    </button>
+                </div>
+            </div>
+
+            <div class="panel-section">
+                <h2>TECH UPGRADES</h2>
+                <p class="section-desc">Unlock using Science Points.</p>
+                <div class="blueprint-list">
+                    <button class="tech-btn" id="btn-tech-plasma">
+                        <span class="material-icons-round">memory</span> Plasma Turrets (100 SP)
+                    </button>
+                    <button class="tech-btn" id="btn-tech-exo">
+                        <span class="material-icons-round">fitness_center</span> Exo-Suits (150 SP)
+                    </button>
+                </div>
+            </div>
+        </aside>
+
+        <!-- CENTER DISPLAY: CANVAS ARENA -->
+        <section class="colony-arena">
+            <div class="canvas-wrapper">
+                <canvas id="game-canvas" width="800" height="600"></canvas>
+            </div>
+            
+            <div class="simulation-triggers">
+                <button class="btn btn-trigger btn-cavein" id="btn-trigger-cavein">
+                    <span class="material-icons-round">broken_image</span> Trigger Cave-in
+                </button>
+                <button class="btn btn-trigger btn-swarm" id="btn-trigger-swarm">
+                    <span class="material-icons-round">bug_report</span> Spawn Bug Swarm
+                </button>
+                <button class="btn btn-trigger btn-eclipse" id="btn-trigger-eclipse">
+                    <span class="material-icons-round">nights_stay</span> Solar Eclipse
+                </button>
+                <button class="btn btn-trigger btn-godmode" id="btn-trigger-godmode">
+                    <span class="material-icons-round">visibility</span> Toggle God Mode
+                </button>
+            </div>
+        </section>
+
+        <!-- RIGHT SIDEBAR: LOG FEED & TIME CONTROL -->
+        <aside class="colony-panel panel-right">
+            <div class="panel-section flex-1">
+                <h2>AGENT SWARM LOGS</h2>
+                <div class="logs-container" id="agent-logs-feed">
+                    <div class="log-line system">[SYSTEM] Swarm nodes loaded. Simulation initialized.</div>
+                </div>
+            </div>
+
+            <div class="panel-section">
+                <h2>TIME DILATION</h2>
+                <div class="time-controls">
+                    <button class="time-btn active" data-speed="1">1x</button>
+                    <button class="time-btn" data-speed="2">2x</button>
+                    <button class="time-btn" data-speed="5">5x</button>
+                </div>
+            </div>
+        </aside>
+    </main>
+
+    <!-- INCLUDE SCRIPTS -->
+    <script src="pathfinding.js"></script>
+    <script src="entities.js"></script>
+    <script src="ui.js"></script>
+    <script src="game.js"></script>
+</body>
+</html>
